@@ -14,7 +14,7 @@ import Routes from 'routes'
 import {
   ThemeProvider,
   AuthProvider
-} from 'context'
+} from 'contexts'
 
 export default function App () {
   const [loaded] = useFonts({

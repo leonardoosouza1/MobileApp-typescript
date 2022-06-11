@@ -4,8 +4,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "context": [
-        "./src/context",
+      "contexts": [
+        "./src/contexts",
       ],
       "hooks": [
         "./src/hooks",
