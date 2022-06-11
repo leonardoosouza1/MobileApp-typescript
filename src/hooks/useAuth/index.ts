@@ -1,1 +1,1 @@
-export * from './useContex'
+export * from './useContext'
