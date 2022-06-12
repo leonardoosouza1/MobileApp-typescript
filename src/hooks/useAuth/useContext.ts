@@ -1,1 +1,1 @@
-export { ContextProvider as useAuth } from 'contexts'
+export { ContextProvider as useAuth } from '../../contexts'

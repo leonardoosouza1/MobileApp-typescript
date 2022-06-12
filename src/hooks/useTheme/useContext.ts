@@ -1,1 +1,1 @@
-export { ThemeContext as useTheme } from 'contexts'
+export { ThemeContext as useTheme } from '../../contexts'

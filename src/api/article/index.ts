@@ -1,32 +1,33 @@
+import { AxiosResponse } from 'axios'
 import instance from '../instance'
 
-type TarticleResponse = {
-    id: string
-    title: string
-    description: string
-    body: string
-    thumbnail: string
-    'create_at': string
+export type TarticleResponse = {
+  id: string
+  title: string
+  description: string
+  body: string
+  thumbnail: string
+  'create_at': string
 }
 
-interface ICreateArticle {
-    id?: string
-    title: string
-    description: string
-    body: string
+export interface IArticleServices {
+  getArticlesService: () => Promise<Array<TarticleResponse>>
+  createArticleService: (title: string, description: string, body: string) => Promise<TarticleResponse>
+  updateArticleService: (id:string, title: string, description: string, body: string) => Promise<TarticleResponse>
+  deleteArticleService: (id: string) => Promise<AxiosResponse>
 }
 
-const articleService = () => {
-  const getArticles = async () => {
-    const res:[TarticleResponse] = await instance.get('/article/all')
+const articleServices = ():IArticleServices => {
+  const getArticlesService = async () => {
+    const res: Array<TarticleResponse> = await instance.get('/article/all')
     return res
   }
 
-  const createArticle = async ({
-    title,
-    description,
-    body
-  }: ICreateArticle) => {
+  const createArticleService = async (
+    title:string,
+    description:string,
+    body:string
+  ) => {
     const res:TarticleResponse = await instance.post('/article/create', {
       title,
       description,
@@ -35,8 +36,8 @@ const articleService = () => {
     return res
   }
 
-  const updateArticle = async ({ id, title, description, body }: ICreateArticle) => {
-    const res:TarticleResponse = await instance.put(`/article/update/${id}`, {
+  const updateArticleService = async (id:string, title:string, description:string, body: string) => {
+    const res: TarticleResponse = await instance.put(`/article/update/${id}`, {
       title,
       description,
       body
@@ -45,14 +46,14 @@ const articleService = () => {
     return res
   }
 
-  const deleteArticle = async (id: string) => instance.delete(`/article/delete/${id}`)
+  const deleteArticleService = async (id: string) => instance.delete(`/article/delete/${id}`)
 
   return {
-    getArticles,
-    createArticle,
-    updateArticle,
-    deleteArticle
+    getArticlesService,
+    createArticleService,
+    updateArticleService,
+    deleteArticleService
   }
 }
 
-export default articleService
+export { articleServices }

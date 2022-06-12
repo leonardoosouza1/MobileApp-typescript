@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { createArticleService, getArticlesService, updateArticleService, deleteArticleService } from 'api/article'
-
+import { articleServices } from '../../../api/article'
 import ArticleContext from '../context'
+type TArticle = {
+  id: string,
+  title: string,
+  description: string,
+  body: string,
+}
+type Tarticles = Array<TArticle> | null
 
-type Tarticles = Array<{
-  id: string
-  title: string
-  description: string
-  body: string
-  }>
 export type TArticleProvider = {
-  articles: Array<Tarticles> | null,
+  articles: Tarticles | null,
   loading: boolean,
   createArticle: (title: string, description: string, body: string) => void,
   getArticles: () => void,
@@ -20,8 +20,9 @@ export type TArticleProvider = {
 
 const initialState = null
 
-const ArticleProvider = ({ children }: {children: React.ReactNode}) => {
-  const [ArticleData, setArticleData] = useState(initialState)
+const ArticleProvider = ({ children }: { children: React.ReactNode }) => {
+  const { createArticleService, getArticlesService, updateArticleService, deleteArticleService } = articleServices()
+  const [ArticleData, setArticleData] = useState<Tarticles>(initialState)
   const [loading, setLoading] = useState(false)
 
   const createArticle = async (title: string, description: string, body: string) => {
@@ -43,8 +44,8 @@ const ArticleProvider = ({ children }: {children: React.ReactNode}) => {
   const getArticles = async () => {
     setLoading(true)
 
-    const { articles } = await getArticlesService()
-    setArticleData(articles)
+    const res:Tarticles = await getArticlesService()
+    setArticleData(res)
 
     setLoading(false)
   }
@@ -53,10 +54,10 @@ const ArticleProvider = ({ children }: {children: React.ReactNode}) => {
     setLoading(true)
 
     updateArticleService(id, title, description, body).then(() => {
-      const insertNewArticle = ArticleData.map((article: {id: string}) => {
+      const insertNewArticle:Tarticles = ArticleData.map((article) => {
         if (article.id === id) {
           return {
-            ...article,
+            id,
             title,
             description,
             body
