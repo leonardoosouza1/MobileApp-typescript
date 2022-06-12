@@ -1,15 +1,14 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react",
     "strict": true,
     "baseUrl": ".",
     "paths": {
       "contexts": [
-        "./src/contexts/*",
+        "./src/contexts",
       ],
       "hooks": [
-        "./src/hooks/*",
+        "./src/hooks",
       ],
       "routes": [
         "./src/routes",
