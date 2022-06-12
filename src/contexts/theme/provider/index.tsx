@@ -1,7 +1,7 @@
 import { NativeBaseProvider, extendTheme } from 'native-base'
 import React from 'react'
 
-const ThemeProvider = ({ children }: {children: React.ReactNode}) => {
+const ThemeProvider: React.FC = ({ children }) => {
   const theme = extendTheme({
     colors: {
       purple: {
