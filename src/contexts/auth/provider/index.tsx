@@ -19,7 +19,7 @@ export type TAuthProvider = {
   isAuthenticated: boolean
 }
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider = ({ children }: {children: React.ReactNode}) => {
   const [authData, setAuthData] = useState<TAuthData>({
     name: null,
     token: null,
