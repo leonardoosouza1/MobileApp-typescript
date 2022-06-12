@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Button, Typography, View } from '../../UI'
 
-const SignUpForm = ({ children, ...props }: {children: React.ReactNode}) => {
+const SignUpForm = ({ ...props }) => {
   return (
     <View {...props}>
       <Typography>b</Typography>

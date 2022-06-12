@@ -5,10 +5,10 @@ import {
 } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
-import { SignUp } from '../screens'
+import { SignUp, SignIn } from '../screens'
 
 type PublicRoutesNavigatorProps = {
-    Login: undefined;
+    SignIn: undefined;
     SignUp: undefined;
 }
 
@@ -18,7 +18,7 @@ const PublicRoutes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='SignUp'
+        initialRouteName='SignIn'
         screenOptions={{
           headerShown: false,
           gestureDirection: 'horizontal',
@@ -26,8 +26,8 @@ const PublicRoutes = () => {
           gestureEnabled: true
         }}
       >
+        <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
-
       </Stack.Navigator>
     </NavigationContainer>
   )

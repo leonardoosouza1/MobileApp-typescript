@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import AuthContext from '../context'
+import { AuthContext } from '../context'
 
 type TAuthData = {
   token: string | null,

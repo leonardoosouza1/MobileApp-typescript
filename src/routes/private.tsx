@@ -5,6 +5,8 @@ import {
 } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
+import { CreteArticle, Dashboard } from '../screens'
+
 type PublicRoutesNavigatorProps = {
     Dashboard: undefined;
     CreateArticle: undefined;
@@ -24,8 +26,8 @@ const PrivateRoutes = () => {
           gestureEnabled: true
         }}
       >
-        {/* <Stack.Screen name="Dashboard" component={}/>
-        <Stack.Screen name="CreateArticle" component={} /> */}
+        <Stack.Screen name="Dashboard" component={Dashboard}/>
+        <Stack.Screen name="CreateArticle" component={CreteArticle} />
 
       </Stack.Navigator>
     </NavigationContainer>
