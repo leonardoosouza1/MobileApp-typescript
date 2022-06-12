@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import AuthContext from '../context'
+import { AuthContext } from '../context'
 
 type TAuthData = {
   token: string | null,
   refreshToken: string | null,
   name: string | null,
-  expoPushToken: string | null,
+  isAuthenticated: boolean | null,
 }
 
 export type TAuthProvider = {
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     name: null,
     token: null,
     refreshToken: null,
-    expoPushToken: null
+    isAuthenticated: false
   })
 
   useEffect(() => {
@@ -32,20 +32,18 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
       const [
         token,
         refreshToken,
-        name,
-        expoPushToken
+        name
       ] = await AsyncStorage.multiGet([
         'token',
         'refreshToken',
-        'name',
-        'expoPushToken'
+        'name'
       ])
 
       setAuthData({
         token: token[1] || null,
         refreshToken: refreshToken[1] || null,
         name: name[1] || null,
-        expoPushToken: expoPushToken[1] || null
+        isAuthenticated: !!token[1]
       })
     })()
   }, [])
@@ -77,7 +75,7 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
       token: null,
       refreshToken: null,
       name: null,
-      expoPushToken: null
+      isAuthenticated: null
     })
   }
 
