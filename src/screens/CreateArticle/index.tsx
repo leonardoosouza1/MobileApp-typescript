@@ -4,7 +4,7 @@ import { Platform } from 'react-native'
 import { useHeaderHeight } from '@react-navigation/elements'
 
 import { ArticleForm } from '../../components/Forms'
-const CreteArticle = () => {
+const CreteArticle = ({ route }) => {
   const headerHeight = useHeaderHeight()
 
   return (
@@ -13,7 +13,7 @@ const CreteArticle = () => {
     behavior= {(Platform.OS === 'ios') ? 'padding' : undefined}
     keyboardVerticalOffset={headerHeight}
     >
-      <ArticleForm />
+      <ArticleForm {...route}/>
     </KeyboardAvoidingView>
   )
 }

@@ -7,7 +7,8 @@ import {
   SignUpButton,
   InputLabel
 } from './styles'
-// import { useAuth } from '../../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
+import { authService } from '../../../api/auth'
 
 type TcredencialData = {
   email: string | null,
@@ -15,14 +16,23 @@ type TcredencialData = {
   password: string | null
 }
 const SignUpForm = () => {
+  const { saveUserData } = useAuth()
+  const { createUser } = authService()
   const navigation = useNavigation()
-  // const a = useAuth()
-  // console.log(a)
+
   const [credentials, setCredentials] = useState<TcredencialData>({
     email: null,
     username: null,
     password: null
   })
+
+  const handleRegister = async () => {
+    const { email, username, password } = credentials
+    await createUser(email, username, password)
+      .then(async ({ data }) => {
+        await saveUserData(data.access.token, data.access.refresh_token)
+      }).catch((error) => console.error(error))
+  }
 
   return (
     <Container >
@@ -31,7 +41,7 @@ const SignUpForm = () => {
         <SignUpInput
           type="text"
           placeholder="email"
-          onChangeText={(username:string) => setCredentials({ ...credentials, username })}
+          onChangeText={(email:string) => setCredentials({ ...credentials, email })}
         >
           {credentials.email}
         </SignUpInput>
@@ -52,7 +62,7 @@ const SignUpForm = () => {
           {credentials.password}
         </SignUpInput>
       </WrapperInput>
-      <SignUpButton>Sign up</SignUpButton>
+      <SignUpButton onPress={() => handleRegister()} >Sign up</SignUpButton>
     </Container>
   )
 }
