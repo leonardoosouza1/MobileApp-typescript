@@ -9,20 +9,29 @@ import {
   InputLabel,
   RegisterLabel
 } from './styles'
-// import { useAuth } from '../../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
+import { authService } from '../../../api/auth'
 
 type TcredencialData = {
   username: string | null,
   password: string | null
 }
 const SignInForm = () => {
-  const navigation = useNavigation()
-  // const a = useAuth()
-  // console.log(a)
   const [credentials, setCredentials] = useState<TcredencialData>({
     username: null,
     password: null
   })
+  const navigation = useNavigation()
+  const service = authService()
+  const { saveUserData } = useAuth()
+
+  const handleLogin = async () => {
+    await service.login(credentials.username, credentials.password)
+      .then(async ({ data }) => {
+        const { access } = data
+        await saveUserData(access.token, access.refresh_token)
+      })
+  }
 
   return (
     <Container >
@@ -44,7 +53,7 @@ const SignInForm = () => {
           {credentials.password}
         </SignUpInput>
       </WrapperInput>
-      <SignUpButton>Sign in</SignUpButton>
+      <SignUpButton onPress={() => handleLogin()} >Sign in</SignUpButton>
       <Pressable onPress={() => navigation.navigate('SignUp')}>
         <RegisterLabel>Register account</RegisterLabel>
       </Pressable>

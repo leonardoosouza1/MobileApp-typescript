@@ -7,22 +7,45 @@ import {
   SignUpButton,
   InputLabel
 } from './styles'
-// import { useAuth } from '../../../hooks/useAuth'
+import { useArticles } from '../../../hooks/useArticles'
+import { articleServices } from '../../../api/article'
 
 type TcredencialData = {
   title: string | null,
   description: string | null,
   body: string | null
 }
-const ArticleForm = () => {
+const ArticleForm = ({ params = {} }) => {
+  const articleService = articleServices()
+  const { updateArticle, createArticle } = useArticles()
   const navigation = useNavigation()
-  // const a = useAuth()
-  // console.log(a)
+
+  if (params.isEdit) {
+    navigation.setOptions({ headerTitle: 'Edit Article' })
+  }
+
   const [article, setArticle] = useState<TcredencialData>({
-    title: null,
-    description: null,
-    body: null
+    title: params.title || null,
+    description: params.description || null,
+    body: params.body || null
   })
+
+  const handleSaveArticle = async () => {
+    if (params.isEdit) {
+      await articleService
+        .updateArticleService(params.id, article.title, article.description, article.body)
+        .then(async () => await updateArticle(params.id, article.title, article.description, article.body))
+        .catch((error) => console.error(error))
+
+      navigation.goBack()
+    } else {
+      createArticle(article.title, article.description, article.body)
+        .then(async () => await createArticle(article.title, article.description, article.body))
+        .catch((error) => console.error(error))
+
+      navigation.goBack()
+    }
+  }
 
   return (
     <Container >
@@ -52,7 +75,7 @@ const ArticleForm = () => {
           {article.body}
         </SignUpInput>
       </WrapperInput>
-      <SignUpButton>Create</SignUpButton>
+      <SignUpButton onPress={() => handleSaveArticle()}>{ params.isEdit ? 'Edit' : 'Create'}</SignUpButton>
     </Container>
   )
 }

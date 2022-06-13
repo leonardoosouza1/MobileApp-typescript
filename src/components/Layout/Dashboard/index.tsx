@@ -1,35 +1,63 @@
 import React from 'react'
-import { Pressable, FlatList } from 'native-base'
+import { Pressable } from 'native-base'
+import { useNavigation } from '@react-navigation/native'
+import { Alert } from 'react-native'
 import { Typography } from '../../UI'
-import { Container, ArticleCard, WrapperButton } from './styles'
-
+import { Container, ArticleCard, WrapperButton, Thumbnail } from './styles'
+import { useArticles } from '../../../hooks/'
 const Dashboard = () => {
-  const test = [
-    { id: '0', title: 'Title', description: 'some description', body: 'test' },
-    { id: '1', title: 'Title', description: 'some description', body: 'test' },
-    { id: '2', title: 'Title', description: 'some description', body: 'test' },
-    { id: '3', title: 'Title', description: 'some description', body: 'test' },
-    { id: '4', title: 'Title', description: 'some description', body: 'test' },
-    { id: '5', title: 'Title', description: 'some description', body: 'test' },
-    { id: '6', title: 'Title', description: 'some description', body: 'test' },
-    { id: '7', title: 'Title', description: 'some description', body: 'test' },
-    { id: '8', title: 'Title', description: 'some description', body: 'test' },
-    { id: '9', title: 'Title', description: 'some description', body: 'test' }
-  ]
+  const navigation = useNavigation()
+  const { articles, deleteArticle } = useArticles()
+  const handleDelete = (id:string) => {
+    Alert.alert('Delete article', ' you are sure?', [
+      {
+        text: 'Cancel'
+      },
+      {
+        text: 'OK',
+        onPress: async () => await deleteArticle(id)
+      }
+    ])
+  }
+
+  if (!articles?.length) {
+    return (
+      <Container>
+        <Typography>You don't have any articles</Typography>
+      </Container>
+    )
+  }
 
   return (
     <Container>
-      {test.map(({ title, description, body }, index) => (
+      {articles?.map(({ title, description, thumbnail, id, body }, index) => (
         <ArticleCard key={index}>
           <Typography>{title}</Typography>
           <Typography>{description}</Typography>
-          <Typography>{body}</Typography>
+          <Thumbnail
+            alt={title}
+            source={{ uri: thumbnail }} />
           <WrapperButton>
-            <Pressable onPress={() => console.log('delete')} >
+            <Pressable onPress={() => handleDelete(id)} >
               <Typography>Delete</Typography>
             </Pressable>
-            <Pressable onPress={() => console.log('edit')}>
+            <Pressable onPress={() => navigation.navigate('CreateArticle', {
+              isEdit: true,
+              id,
+              title,
+              description,
+              body
+            })}>
               <Typography>Edit</Typography>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate('ViewArticle', {
+              id,
+              title,
+              description,
+              body,
+              thumbnail
+            })}>
+              <Typography>View</Typography>
             </Pressable>
           </WrapperButton>
         </ArticleCard>

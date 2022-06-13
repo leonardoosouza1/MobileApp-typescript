@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { AuthContext } from '../context'
+import AuthContext from '../context'
 
 type TAuthData = {
   token: string | null,
   refreshToken: string | null,
-  name: string | null,
   isAuthenticated: boolean | null,
 }
 
 export type TAuthProvider = {
-  login: (token: string, refreshToken: string, name: string | null) => void
+  saveUserData: (token: string, refreshToken: string | null) => void
   logout: () => void
-  name: string | null
   token: string | null
   refreshToken: string | null
   isAuthenticated: boolean
@@ -21,7 +19,6 @@ export type TAuthProvider = {
 
 const AuthProvider = ({ children }: {children: React.ReactNode}) => {
   const [authData, setAuthData] = useState<TAuthData>({
-    name: null,
     token: null,
     refreshToken: null,
     isAuthenticated: false
@@ -31,8 +28,7 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     (async () => {
       const [
         token,
-        refreshToken,
-        name
+        refreshToken
       ] = await AsyncStorage.multiGet([
         'token',
         'refreshToken',
@@ -42,48 +38,42 @@ const AuthProvider = ({ children }: {children: React.ReactNode}) => {
       setAuthData({
         token: token[1] || null,
         refreshToken: refreshToken[1] || null,
-        name: name[1] || null,
         isAuthenticated: !!token[1]
       })
     })()
   }, [])
 
-  const login = (token: string, refreshToken: string, name: string | null) => {
+  const saveUserData = (token: string, refreshToken: string) => {
     AsyncStorage.multiSet([
       ['token', token],
-      ['refreshToken', refreshToken],
-      ['name', name || '']
+      ['refreshToken', refreshToken]
     ])
 
     setAuthData({
       ...authData,
       token,
-      refreshToken,
-      name
+      refreshToken
     })
   }
 
   const logout = async () => {
     AsyncStorage.multiRemove([
       'token',
-      'refreshToken',
-      'name',
-      'expoPushToken'
+      'refreshToken'
     ])
-
     setAuthData({
       token: null,
       refreshToken: null,
-      name: null,
       isAuthenticated: null
     })
   }
 
   const contextValue = {
-    login,
+    saveUserData,
     logout,
-    ...authData,
-    isAuthenticated: !!authData.token && !!authData.refreshToken && !!authData.name
+    token: authData.token,
+    refreshToken: authData.refreshToken,
+    isAuthenticated: !!authData.token && !!authData.refreshToken
   }
 
   return (
