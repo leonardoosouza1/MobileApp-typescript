@@ -33,7 +33,7 @@ instance.interceptors.response.use(
   },
   async ({ req }) => {
     const accessToken = await AsyncStorage.getItem('token')
-    if (req.status === 401 && accessToken) {
+    if (req?.status === 401 && accessToken) {
       await refreshToken()
 
       return instance(req)
