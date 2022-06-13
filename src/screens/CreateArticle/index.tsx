@@ -1,10 +1,20 @@
 import React from 'react'
-import { SignUpForm } from '../../components/Forms'
+import { KeyboardAvoidingView } from 'native-base'
+import { Platform } from 'react-native'
+import { useHeaderHeight } from '@react-navigation/elements'
+
+import { ArticleForm } from '../../components/Forms'
 const CreteArticle = () => {
+  const headerHeight = useHeaderHeight()
+
   return (
-      <>
-        <SignUpForm />
-      </>
+    <KeyboardAvoidingView
+    flex={1}
+    behavior= {(Platform.OS === 'ios') ? 'padding' : undefined}
+    keyboardVerticalOffset={headerHeight}
+    >
+      <ArticleForm />
+    </KeyboardAvoidingView>
   )
 }
 
