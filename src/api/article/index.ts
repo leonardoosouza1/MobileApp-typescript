@@ -18,10 +18,7 @@ export interface IArticleServices {
 }
 
 const articleServices = ():IArticleServices => {
-  const getArticlesService = async () => {
-    const res: Array<TarticleResponse> = await instance.get('/article/all')
-    return res
-  }
+  const getArticlesService = async () => await instance.get('/article/all')
 
   const createArticleService = async (
     title:string,

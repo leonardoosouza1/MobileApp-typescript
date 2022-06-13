@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { Config } from 'react-native-config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const instance = axios.create({
-  baseURL: Config.BASE_URL
+  baseURL: 'https://test-api.atom6studio.com'
 })
 
 const refreshToken = async () => {
@@ -21,7 +20,6 @@ const refreshToken = async () => {
 
 instance.interceptors.request.use(async (req) => {
   const token = await AsyncStorage.getItem('token')
-
   if (token && req.headers) {
     req.headers.Authorization = `Bearer ${token}`
   }
@@ -33,14 +31,13 @@ instance.interceptors.response.use(
   (res) => {
     return res
   },
-  async ({ req, res }) => {
+  async ({ req }) => {
     const accessToken = await AsyncStorage.getItem('token')
-    if (res.status === 401 && accessToken) {
+    if (req.status === 401 && accessToken) {
       await refreshToken()
 
       return instance(req)
     }
-
     return Promise.reject(req)
   }
 )
