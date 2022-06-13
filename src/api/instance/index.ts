@@ -7,7 +7,7 @@ const instance = axios.create({
 
 const refreshToken = async () => {
   const res = await instance.post('/auth/refresh', {
-    refresh: await AsyncStorage.getItem('refreshToken')
+    refresh_token: await AsyncStorage.getItem('refreshToken')
   })
 
   const { acessToken, refreshToken } = res.data
