@@ -6,6 +6,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native'
 
 import { CreteArticle, Dashboard } from '../screens'
+import { GoBackArrow, Typography, Button, View } from '../components/UI'
 
 type PublicRoutesNavigatorProps = {
     Dashboard: undefined;
@@ -26,9 +27,44 @@ const PrivateRoutes = () => {
           gestureEnabled: true
         }}
       >
-        <Stack.Screen name="Dashboard" component={Dashboard}/>
-        <Stack.Screen name="CreateArticle" component={CreteArticle} />
-
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerRight: () => (
+              <View marginRight={2}>
+                <Button onPress={() => navigation.navigate('CreateArticle')}>
+                Create Article
+                </Button>
+              </View>
+            ),
+            headerTitle: () => (
+              <Typography>
+                Dashboard
+              </Typography>
+            ),
+            headerTitleAlign: 'center'
+          })}
+        />
+        <Stack.Screen
+          name="CreateArticle"
+          component={CreteArticle}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerLeft: () => (
+              <GoBackArrow
+                onPress={() => navigation.goBack()}
+              />
+            ),
+            headerTitle: () => (
+              <Typography>
+                Create Article
+              </Typography>
+            ),
+            headerTitleAlign: 'center'
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )

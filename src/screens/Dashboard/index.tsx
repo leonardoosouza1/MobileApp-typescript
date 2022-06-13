@@ -1,10 +1,8 @@
 import React from 'react'
-import { SignUpForm } from '../../components/Forms'
+import { Dashboard as DashBoardLayout } from '../../components/Layout'
 const Dashboard = () => {
   return (
-      <>
-        <SignUpForm />
-      </>
+    <DashBoardLayout />
   )
 }
 
