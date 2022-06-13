@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
+import { GoBackArrow, Typography } from '../components/UI'
 import { SignUp, SignIn } from '../screens'
 
 type PublicRoutesNavigatorProps = {
@@ -27,7 +28,24 @@ const PublicRoutes = () => {
         }}
       >
         <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerLeft: () => (
+              <GoBackArrow
+                onPress={() => navigation.goBack()}
+              />
+            ),
+            headerTitle: () => (
+              <Typography>
+                Sign Up
+              </Typography>
+            ),
+            headerTitleAlign: 'center'
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
