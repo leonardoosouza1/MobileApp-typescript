@@ -19,24 +19,21 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <FlatList
-      data={test}
-      renderItem={({ item, index }) => (
+      {test.map(({ title, description, body }, index) => (
         <ArticleCard key={index}>
-          <Typography>{item.title}</Typography>
-          <Typography>{item.description}</Typography>
-          <Typography>{item.body}</Typography>
+          <Typography>{title}</Typography>
+          <Typography>{description}</Typography>
+          <Typography>{body}</Typography>
           <WrapperButton>
-            <Pressable onPress={() => console.log('delete', item.id)} >
+            <Pressable onPress={() => console.log('delete')} >
               <Typography>Delete</Typography>
             </Pressable>
-            <Pressable onPress={() => console.log('edit', item.id)}>
+            <Pressable onPress={() => console.log('edit')}>
               <Typography>Edit</Typography>
             </Pressable>
           </WrapperButton>
         </ArticleCard>
-      )}
-      />
+      ))}
     </Container>
   )
 }

@@ -1,10 +1,13 @@
 import styled from 'styled-components'
-import { Card, View } from '../../UI'
+import { ScrollView, Card, View } from '../../UI'
 
-export const Container = styled(View).attrs({
-  flex: 1,
-  height: '100%',
-  backgroundColor: 'purple'
+export const Container = styled(ScrollView).attrs({
+  contentContainerStyle: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+
+  }
 })``
 export const ArticleCard = styled(Card).attrs({
   flexDirection: 'column',
