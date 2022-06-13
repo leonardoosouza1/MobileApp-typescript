@@ -1,19 +1,47 @@
 # MobileApp-typescript
 
-## Install Typescript in project with Expo
-`https://docs.expo.dev/guides/typescript/`
+## First step to use app
+Clone the repository in your device, after, install node_modules dependencies
+
+### Command to clone 
+
+`git clone https://github.com/leonardoosouza1/MobileApp-typescript.git`
 
 
-## Install other dependencies 
+### Install dependencies
 
-yarn add axios styled-components react-icons native-base expo-app-loading @react-native-async-storage/async-storage
+if you use yarn
+`yarn instal `
 
-yarn add -D @types/styled-components 
+if you use npm
+`npm install` 
+## How to start
 
-npx eslint --init
+if you want to start use the command below
 
-## Theme
-`https://colorhunt.co/palettes/dark`
+`expo start `
 
-## Install custom font
-`https://docs.expo.dev/guides/using-custom-fonts/`
+## Docs
+
+Some documentation used in the project
+
+Expo
+`https://docs.expo.dev/`
+
+React Native
+`https://reactnative.dev/docs/getting-started`
+
+Typescript
+`https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html`
+
+React Navigation
+`https://reactnavigation.org/docs/getting-started/`
+
+Native Base
+`https://docs.nativebase.io/?utm_source=HomePage&utm_medium=header&utm_campaign=NativeBase_3`
+
+Styled Components
+`https://styled-components.com/docs`
+
+Eslint
+`https://eslint.org/docs/user-guide/configuring/`
