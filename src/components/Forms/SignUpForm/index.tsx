@@ -9,6 +9,8 @@ import {
 } from './styles'
 import { useAuth } from '../../../hooks/useAuth'
 import { authService } from '../../../api/auth'
+import { isValid } from '../../../utils/validators'
+import { Text } from 'native-base'
 
 type TcredencialData = {
   email: string | null,
@@ -25,15 +27,17 @@ const SignUpForm = () => {
     username: null,
     password: null
   })
+  const { email, username, password } = credentials
 
-  const handleRegister = async () => {
-    const { email, username, password } = credentials
-    await createUser(email, username, password)
-      .then(async ({ data }) => {
-        await saveUserData(data.access.token, data.access.refresh_token)
-      }).catch((error) => console.error(error))
+  const handleSubmit = async () => {
+    if (isValid(email, username, password)) {
+      await createUser(email, username, password)
+        .then(async ({ data }) =>
+          await saveUserData(data.access.token, data.access.refresh_token)
+        )
+        .catch((error) => console.error(error))
+    }
   }
-
   return (
     <Container >
       <WrapperInput>
@@ -62,7 +66,9 @@ const SignUpForm = () => {
           {credentials.password}
         </SignUpInput>
       </WrapperInput>
-      <SignUpButton onPress={() => handleRegister()} >Sign up</SignUpButton>
+      <SignUpButton onPress={() => handleSubmit()} >
+        <Text color='white'>Sign Up</Text>
+      </SignUpButton>
     </Container>
   )
 }
