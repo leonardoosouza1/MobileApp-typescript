@@ -57,7 +57,7 @@ const Dashboard = () => {
               Edit
             </StyledButton>
             <StyledButton
-              bg='blue'
+              bg='gray'
               onPress={() => navigation.navigate('ViewArticle', {
                 id,
                 title,
