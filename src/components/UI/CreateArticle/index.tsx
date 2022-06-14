@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 const CreateArticle = () => {
   const navigation = useNavigation()
   return (
-    <Button onPress={() => navigation.navigate('CreateArticle')} >
+    <Button marginRight={2} onPress={() => navigation.navigate('CreateArticle')} >
       <Text style={{ color: 'white' }}>Create article</Text>
     </Button >
   )

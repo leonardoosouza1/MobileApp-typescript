@@ -3,12 +3,12 @@ import { Pressable } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { Alert } from 'react-native'
 import { Typography } from '../../UI'
-import { Container, ArticleCard, WrapperButton, Thumbnail } from './styles'
+import { Container, ArticleCard, WrapperButton, StyledButton, Thumbnail } from './styles'
 import { useArticles } from '../../../hooks/'
 const Dashboard = () => {
   const navigation = useNavigation()
-  const { articles, deleteArticle } = useArticles()
-  const handleDelete = (id:string) => {
+  const { articles, deleteArticle, loading } = useArticles()
+  const handleDelete = (id: string) => {
     Alert.alert('Delete article', ' you are sure?', [
       {
         text: 'Cancel'
@@ -20,7 +20,7 @@ const Dashboard = () => {
     ])
   }
 
-  if (!articles?.length) {
+  if (!articles?.length && !loading) {
     return (
       <Container>
         <Typography>You don't have any articles</Typography>
@@ -38,27 +38,36 @@ const Dashboard = () => {
             alt={title}
             source={{ uri: thumbnail }} />
           <WrapperButton>
-            <Pressable onPress={() => handleDelete(id)} >
-              <Typography>Delete</Typography>
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate('CreateArticle', {
-              isEdit: true,
-              id,
-              title,
-              description,
-              body
-            })}>
-              <Typography>Edit</Typography>
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate('ViewArticle', {
-              id,
-              title,
-              description,
-              body,
-              thumbnail
-            })}>
-              <Typography>View</Typography>
-            </Pressable>
+            <StyledButton
+              onPress={() => handleDelete(id)}
+              bg='red'
+            >
+              Delete
+            </StyledButton>
+            <StyledButton
+              onPress={() => navigation.navigate('CreateArticle', {
+                isEdit: true,
+                id,
+                title,
+                description,
+                body
+              })}
+              bg='gray'
+            >
+              Edit
+            </StyledButton>
+            <StyledButton
+              bg='blue'
+              onPress={() => navigation.navigate('ViewArticle', {
+                id,
+                title,
+                description,
+                body,
+                thumbnail
+              })}
+            >
+              View
+            </StyledButton>
           </WrapperButton>
         </ArticleCard>
       ))}

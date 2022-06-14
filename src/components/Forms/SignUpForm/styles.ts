@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Pressable } from 'native-base'
-import { Input, Button, View, Typography } from '../../UI'
+import { Input, View, Typography } from '../../UI'
 export const Container = styled(View)`
     flex: 1;
     justify-content: space-evenly;

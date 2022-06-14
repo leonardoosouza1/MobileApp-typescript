@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Image } from 'native-base'
-import { ScrollView, Card, View } from '../../UI'
+import { ScrollView, Card, View, Button } from '../../UI'
 
 export const Container = styled(ScrollView).attrs({
   contentContainerStyle: {
@@ -13,7 +13,7 @@ export const Container = styled(ScrollView).attrs({
 export const ArticleCard = styled(Card).attrs({
   flexDirection: 'column',
   justifyContent: 'space-evenly',
-  width: '80%',
+  width: '85%',
   height: 'auto',
   margin: '16px 0px',
   borderRadius: '8px'
@@ -23,9 +23,8 @@ export const WrapperButton = styled(View).attrs({
   justifyContent: 'space-around',
   alignItems: 'center',
   width: '100%',
-  height: '30px',
-  borderRadius: '8px',
-  backgroundColor: 'neutral.gray2'
+  height: '40px',
+  borderRadius: '8px'
 
 })``
 
@@ -37,3 +36,11 @@ export const Thumbnail = styled(Image).attrs({
   borderRadius: '8px'
 
 })``
+
+export const StyledButton = styled(Button)`
+  width: 80px;
+  height: 30px;
+  padding: 0px;
+  border-radius: 8px;
+  background-color: ${({ bg }) => bg};
+`
