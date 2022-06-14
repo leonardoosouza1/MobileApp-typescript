@@ -29,6 +29,7 @@ const ArticleProvider = ({ children }: { children: React.ReactNode }) => {
   const [ArticleData, setArticleData] = useState<Tarticles>(initialState)
   const [loading, setLoading] = useState(false)
   const { token } = useAuth()
+
   const createArticle = async (title: string, description: string, body: string) => {
     setLoading(true)
 
@@ -84,7 +85,9 @@ const ArticleProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
-    getArticles()
+    if (token?.length) {
+      getArticles()
+    }
   }, [token])
 
   const contextValue: TArticleProvider = { articles: ArticleData, loading, createArticle, getArticles, updateArticle, deleteArticle }
