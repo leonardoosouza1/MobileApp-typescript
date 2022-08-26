@@ -1,7 +1,7 @@
 # MobileApp-typescript
 
 ## First step to use app
-Clone the repository in your device, after, install node_modules dependencies
+Clone the repository in your device, after install node_modules dependencies
 
 ### Command to clone 
 
